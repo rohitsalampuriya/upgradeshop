@@ -1,0 +1,291 @@
+1.   Starter Code and Configuration Guidelines
+
+The starter code is the code snippet on which you must create the frontend using React of the upGrad Eshop application. This will help you follow the proper configuration guidelines that are required for developing this application.
+
+Use create-react-app to bootstrap a react project which will act as the starter code for your application.
+
+
+At all points in time, you need to make sure that your web app is configured properly. Keeping the configuration guidelines in mind, you need to ensure that whenever you make any changes, you adhere to the guidelines mentioned below.
+
+
+
+1. Always keep the following folders and the corresponding files inside them in the root directory of your application.
+
+‘node_modules’ folder (containing the list of all the packages)
+
+‘public’ folder
+
+     ‘index.html’ file
+
+     ‘manifest.json’ file
+
+‘src’ folder
+
+    ‘assets’ folder
+
+    ‘common’ folder
+
+    ‘components’ folder
+
+   ‘index.css’ file
+ 
+   ‘index.js’ file
+
+‘.gitignore’ file
+
+‘package-lock.json’ file
+
+‘package.json’ file
+
+‘README.md’ file
+
+Remember to not disturb the names of these folders and files, and their locations inside the application. If you do, then it would be cumbersome for the graders to evaluate your code based on the given rubrics. Also, take special care to change only the required content of these folders and files. If you fail to do so, then your application may fail to run successfully, and this would also lead to your application being evaluated incorrectly.
+
+2. Place all the common elements, components, stylesheets, scripts, etc., inside the ‘common’ folder.
+
+
+
+3. Place all the resource files that you need to use in the application inside the ‘assets’ folder.
+
+
+
+4. Create all your React components inside the ‘components’  folder. For each component, you need to first create a folder by the name of that component. Inside this folder, you need to create one JSX file and one stylesheet corresponding to that component.
+
+
+
+For example, if you are creating the home component, then you can create a folder named ‘home’ inside the ‘components’ folder. Inside this folder, you can create two files, ‘Home.js’ and ‘Home.css’, which are, respectively, the JSX and stylesheet files corresponding to the home component of the application. It should look like this.
+
+‘components’ folder
+
+   ‘home’ folder
+
+      ‘Home.js’ file
+
+      ‘Home.css’ file
+
+
+
+Also, find below the backend code for the application:
+
+
+=========================================================================================================================================
+
+2.  Project Statement for the Navigation Bar
+
+
+The first step in building the application is the creation of the navigation bar. 
+
+ 
+
+The navigation bar appears on the top of every page of the application and contains the following based on whether the user is logged in and if the logged-in user is an admin or not:
+
+upGrad Eshop logo
+
+If the user is not logged in:
+
+Links to log in and signup pages
+
+If the user is logged in:
+
+Search bar
+
+Link to home page 
+
+Button to log out of the application
+
+If the user logged in as an admin, add the link to the ‘Add Products’ page
+
+ 
+
+Guidelines for the Navigation Bar:
+
+Use @material-ui/icons/ShoppingCart for the logo.
+Use react-router Route to set up routing for login and signup pages.
+Use @material-ui/core/AppBar to create the AppBar.
+When a user clicks on the Sign In button in the form, the API endpoint: /auth, which you created inside AuthController in your backend project, must be used to log the user into the application.
+When a user clicks on the Sign Up button in the form, the API endpoint: /users, which you created inside AuthController in your backend project, must be used to register the user into the application.
+When a user successfully signs in, the user should be automatically redirected to the products page.
+When a user searches for a product, the API endpoint: /products, which you can find inside the ProductController in the starter backend code, must be used to search the product in the application.
+
+=====================================================================================
+
+3.  Supporting Backend Code   /// backend code is given
+
+
+Step 1: Start the Backend Server
+Before you can connect to the backend APIs, you need to start the server. Follow the steps below to do so:
+
+Open a terminal or command prompt.
+Navigate to the root directory of the backend server.
+
+Run the following command to start the server:
+
+npm start / node index.js
+
+This command will start the backend server and make it accessible at a specific port (usually port 3000 or 5000).
+
+The port number is usually present in the app.js file. 
+
+ 
+
+Step 2: Explore the Available API Endpoints
+
+The backend server provides several API endpoints that you can interact with. These endpoints define the functionality exposed by the server. To find the available API endpoints, follow these steps:
+
+Open a web browser.
+Enter the following URL in the address bar:
+
+http://localhost:3000
+
+Replace 3000 with the port number on which your backend server is running, if different.
+You should see a page displaying the available API endpoints and their corresponding URLs. Make note of the URLs you'll need to interact with.
+
+ 
+
+Login Endpoint Documentation
+The login endpoint allows users to authenticate themselves and obtain an access token, which can be used to access protected resources or perform authorized actions. Follow the steps below to handle the login functionality in your React application.
+
+ 
+
+
+Step 1: Display the Login Form
+In your React application, create a login form component where users can enter their credentials (e.g., email and password). You can design and implement the form according to your application's requirements.
+
+ 
+
+
+Step 2: Capture User Input
+In the login form component, capture the user's input (email and password) when they submit the form. 
+Step 3: Send the Login Request
+When the user submits the login form, you'll need to send a request to the backend login endpoint to authenticate the user. Use the fetch API or an HTTP library (e.g., axios) to send a POST request to the login endpoint.
+Here's an example using the fetch API:
+
+fetch('http://localhost:3000/api/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    email: userEmail,
+    password: userPassword,
+  }),
+})
+  .then(response => response.json())
+  .then(data => {
+    // Handle the login response
+  })
+  .catch(error => {
+    // Handle the error
+  });
+ 
+
+Replace 'http://localhost:3000/api/login' with the actual URL of your backend login endpoint. Make sure to include the appropriate headers and send the user's email and password as the request payload in the JSON format.
+
+ 
+
+
+Step 4: Handle the Login Response
+After receiving the login response from the backend, you need to handle it in your React application. Typically, the backend will send a response containing an access token if the login is successful. If the login fails, an appropriate error message or status code will be returned.
+In the .then() block of the fetch request, you can access the response data returned by the backend. Here's an example of handling a successful login response:
+
+.then(data => {
+  // Save the access token in the application's state or local storage
+  const accessToken = data.accessToken;
+  // Perform any necessary actions after successful login (e.g., redirect to a protected page)
+})
+ 
+
+In this example, data.accessToken represents the access token received from the backend. You can store the token in the application's state or local storage for subsequent authenticated requests.
+In case of a failed login attempt, you can handle the error response in the .catch() block:
+
+.catch(error => {
+  // Display an error message or take appropriate action based on the error
+});
+
+=======================================================================================
+
+4.  Project Statement for Contents of Products Page
+
+
+The second step is to create the main contents of the products page.
+
+ 
+
+Guidelines for the Products Page:
+
+In case a user is not logged in, they should not be able to proceed to the products page. The user should be redirected to the login page.
+Use @material-ui/core/Card to display the products.
+Use @material-ui/lab/ToggleButton to create the product category tabs.
+These categories should be fetched using the endpoint: /products/categories.
+The category tabs should be present on all the pages of the application.
+The items should be sorted according to the following options:
+Default: The products should be displayed in the same order as received from the backend.
+Price high to low: The products should be displayed in the decreasing order of price. This means that the product with the highest price should be displayed first.
+Price low to high: The products should be displayed in the increasing order of price. This means that the product with the lowest price should be displayed first.
+Newest: The products should be displayed in the order of addition or modification, with the latest added or modified product displayed first.
+To display all the products, the API endpoint: /products, which is created inside ProductController in the backend code, must be used to display all the products.
+To display all the categories, the API endpoint: /products/categories, which is created inside ProductController in the backend code, must be used to log the user into the application.
+
+========================================================================================
+
+Project Statement for the Product Details Page
+Once the user clicks the Buy button on any product on the Products page, they should be redirected to the product details page of that product.
+
+ 
+
+Guidelines for Product Details page:
+
+To display the details of a product, the following API endpoint: /products/{id}, which is created inside ProductController in the backend code, must be used to get the product details.
+The user should be able to input the quantity for a product on the details page.
+Ensure the product image is properly bounded. In case the image is not available, alternate text should be displayed for accessibility purposes. 
+
+===========================================================================================
+
+Project Statement for Placing the Order
+Once the user clicks on the Place Order button on the product details page, the user should be redirected to the orders page. The Create Order page should have a stepper menu.
+
+ 
+
+Guidelines for the Create Order page:
+
+Use @material-ui/core/Stepper to create the stepper menu.
+On confirming the order, the following message should be displayed:
+‘Your order is confirmed.’
+
+To create an order, the API endpoint: /orders, which is created inside OrderController in the backend code, must create an order.
+To add the address, the API endpoint: /addresses, which is created inside ShippingAddressController in the backend code, should add the address.
+
+=========================================================================================
+
+5. Project Statement for the Admin User
+
+
+An admin can manage the products in an application.
+
+The following are changes in the user interface for an Admin:
+
+ 
+
+1. Add Product link in AppBar
+
+2. Modify/Delete icons in the product card
+
+ 
+
+Guidelines for the Admin User functionalities:
+
+On clicking the delete icon in the product card, a dialog to confirm deletion should appear.
+
+On confirming deletion, display a message ‘Product <name> deleted successfully’.
+
+On successful modification, display a message ‘Product <name> modified successfully’.
+
+On successful addition of a product using the Add Product form, display a message ‘Product <name> added successfully’.
+
+To display all the products in the Manage Products page, the API endpoint: /products, which is created inside ProductController in the backend code, must be used to display all the products.
+
+To add a product, the API endpoint: /products, which is created inside ProductController in the backend code, should add the product.
+
+To edit a product, the API endpoint: /products/{id}, which is created inside ProductController in the backend code, should edit the product.
+
+To delete a product, the API endpoint: /products/{id}, which is created inside ProductController in the backend code, should delete the product.
